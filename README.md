@@ -1,8 +1,4 @@
-Most manga conversion methods for ereaders add margins. But KCC enables true fullscreen from top to bottom. 
-
-![header](images/header_marginsXO.jpeg)
-
-(feat. Ya Boy Kongming! and Fire Force from a [Humble Bundle](https://humblebundleinc.sjv.io/xL6Zv1) PDF source.)
+![thumbnail](images/thumbnail.jpeg)
 
 # KCC
 
@@ -31,16 +27,22 @@ KCC's main goal is maximum image quality at significantly smaller file size. For
    This can also improve battery life, page turn speed, and general performance
    on underpowered ereaders with small memory and storage capacities.
 
-2) fixes black levels to avoid gray/faded blacks found in many Kindle Store manga.
+2) doesn't add extra margins like other software. KCC enables true fullscreen top to bottom.
+
+![header](images/header_marginsXO.jpeg)
+
+3) fixes black levels to avoid gray/faded blacks found in many Kindle Store manga.
 (The original source was gray, KCC processing made it black.)
 
 ![black](images/black_white2.jpeg)
 
-3) fixes [the rainbow effect on Kaleido 3 color eink](https://www.youtube.com/watch?v=Dw2HTJCGMhw) without blur using a 2D Discrete Fourier Transform:
+(feat. Ya Boy Kongming! and Fire Force from a [Humble Bundle](https://humblebundleinc.sjv.io/xL6Zv1) PDF source.)
+
+4) fixes [the rainbow effect on Kaleido 3 color eink](https://www.youtube.com/watch?v=Dw2HTJCGMhw) without blur using a 2D Discrete Fourier Transform:
 
 ![rainbow](images/rainbow720.jpeg)
 
-4) can [semi-automatically detect 2-page spreads](https://www.youtube.com/watch?v=kfIX67f7Aqk) from pre-split single pages:
+5) can [semi-automatically detect 2-page spreads](https://www.youtube.com/watch?v=kfIX67f7Aqk) from pre-split single pages:
 
 ![before](images/joinorder.jpeg)
 
