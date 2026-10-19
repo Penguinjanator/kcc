@@ -1,4 +1,4 @@
-![thumbnail](images/thumbnail.jpeg)
+![thumbnail](images/thumbnail2.jpeg)
 
 # KCC
 
