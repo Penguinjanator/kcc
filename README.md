@@ -1,4 +1,6 @@
-![thumbnail](images/thumbnail2.jpeg)
+![thumbnail](images/thumbnail.jpeg)
+
+Title: Ubunchu! | Author: Hiroshi Seo | Publisher: ASCII MEDIA WORKS Inc.
 
 # KCC
 
