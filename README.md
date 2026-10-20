@@ -33,14 +33,14 @@ KCC's main goal is maximum image quality at significantly smaller file size. For
 
 ![header](images/header_marginsXO.jpeg)
 
-[Title: Ya Boy Kongming! | Story: Yuto Yotsuba | Art: Ryo Ogawa | Publisher: Kodansha]
+[Title: Ya Boy Kongming! | Story: Yuto Yotsuba | Art: Ryo Ogawa | Publisher: Kodansha | Source: Humble Bundle]
 
 3) fixes black levels to avoid gray/faded blacks found in many Kindle Store manga.
 (The original source was gray, KCC processing made it black.)
 
 ![black](images/black_white2.jpeg)
 
-[Title: Fire Force | Author: Atsushi Ohkubo | Publisher: Kodansha]
+[Title: Fire Force | Author: Atsushi Ohkubo | Publisher: Kodansha | Source: Humble Bundle]
 
 4) fixes [the rainbow effect on Kaleido 3 color eink](https://www.youtube.com/watch?v=Dw2HTJCGMhw) without blur using a 2D Discrete Fourier Transform:
 
