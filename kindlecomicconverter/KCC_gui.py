@@ -183,6 +183,9 @@ class VersionThread(QThread):
                 json_parser = requests.get("https://api.github.com/repos/ciromattia/kcc/releases/latest").json()
 
                 html_url = json_parser["html_url"]
+                if not html_url.startswith('https://github.com/ciromattia/kcc/releases/tag/'):
+                    print('Somehow you got MITM')
+                    raise Exception('Somehow you got MITM')
                 latest_version = json_parser["tag_name"]
                 latest_version = re.sub(r'^v', "", latest_version)
 
@@ -199,6 +202,16 @@ class VersionThread(QThread):
                                        headers={
                                            'Accept': 'application/vnd.github.raw+json',
                                            'X-GitHub-Api-Version': '2022-11-28'}).json()
+            link_allowlist = (
+                'https://humblebundleinc.sjv.io/',
+                'https://www.humblebundle.com/',
+                'https://www.awin1.com/',
+                'https://www.fanatical.com/',
+                'https://kodansha.us/',
+                'https://youtu.be/',
+                'https://www.youtube.com/',
+                'https://www.linkedin.com/',
+            )
             for category, payloads in announcements.items():
                 for payload in payloads:
                     if not isinstance(payload, dict):
@@ -218,8 +231,12 @@ class VersionThread(QThread):
                     if category == 'kofi':
                         icon = 'kofi'
                     message = f"{payload.get('name')}"
-                    if payload.get('link'):
-                        message = '<a href="{}"><b>{}</b></a>'.format(payload.get('link'), payload.get('name'))
+                    link = payload.get('link')
+                    if link:
+                        for allowed_link in link_allowlist:
+                            if link.startswith(allowed_link):
+                                message = '<a href="{}"><b>{}</b></a>'.format(payload.get('link'), payload.get('name'))
+                                break
                     if payload.get('showDeadline'):
                         message += f': {time_left}'
                     if category == 'humbleBundles':
@@ -961,6 +978,7 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
         GUI.defaultOutputFolderButton.setEnabled(status)
         GUI.clearButton.setEnabled(status)
         GUI.fileButton.setEnabled(status)
+        GUI.directoryButton.setEnabled(status)
         GUI.formatBox.setEnabled(status)
         GUI.optionWidget.setEnabled(status)
         GUI.gammaWidget.setEnabled(status)
@@ -1323,8 +1341,15 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
             if QApplication.keyboardModifiers() == Qt.KeyboardModifier.ShiftModifier:
                 if not self.selectOutputFolder():
                     return
+            elif GUI.defaultOutputFolderBox.checkState() == Qt.CheckState.PartiallyChecked:
+                parent = Path(self.jobList.item(0).text()).parent
+                target_path = parent.joinpath(f"{parent.name} [kcc]")
+                if not target_path.exists():
+                    target_path.mkdir()
+                self.targetDirectory = str(target_path)
             elif GUI.defaultOutputFolderBox.isChecked():
-                self.targetDirectory = self.defaultOutputFolder
+                parent = Path(self.jobList.item(0).text()).parent
+                self.targetDirectory = os.path.join(self.defaultOutputFolder, f"{parent.name} [kcc]")
             else:
                 GUI.targetDirectory = ''
             self.progress.start()
@@ -1335,12 +1360,6 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
                 self.addMessage(QT_TRANSLATE_NOOP('KCCGUI', 'No files selected! Please choose files to convert.'), 'error')
                 self.needClean = True
                 return
-            if GUI.defaultOutputFolderBox.checkState() == Qt.CheckState.PartiallyChecked:
-                parent = Path(self.jobList.item(0).text()).parent
-                target_path = parent.joinpath(f"{parent.name}")
-                if not target_path.exists():
-                    target_path.mkdir()
-                self.targetDirectory = str(target_path)
             if self.currentMode > 2 and (GUI.widthBox.value() == 0 or GUI.heightBox.value() == 0):
                 GUI.jobList.clear()
                 self.addMessage(QT_TRANSLATE_NOOP('KCCGUI', 'Target resolution is not set!'), 'error')
